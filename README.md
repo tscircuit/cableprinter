@@ -110,14 +110,17 @@ This initial package does not yet integrate these standards into
 ## Bootstrap and publishing
 
 Follows the [tscircuit handbook bootstrap guide](https://github.com/tscircuit/handbook/blob/main/guides/bootstrapping-repos.md):
-`lib/index.ts` source entrypoint, `files: ["lib"]`, no lockfile, Biome, Bun test,
+`lib/index.ts` source entrypoint, no lockfile, Biome, Bun test,
 typecheck/format workflows, Cosmos and Vite aliases. Templates are from
-`@tscircuit/plop`; the GitHub Packages release template omits its build step
-and frozen-lockfile installation because this package publishes TypeScript
-source directly.
+`@tscircuit/plop`. The npm package contains compiled ESM and TypeScript
+declarations in `dist`, built with `bun run build`. `bun run test:package`
+checks the exported package entrypoint in Node.
 
-After the first release, install via the public package proxy:
+Install from npm:
 
 ```sh
-bun add https://jscdn.tscircuit.com/@tscircuit/cableprinter/<version>
+npm install @tscircuit/cableprinter
 ```
+
+The `bun-pver-release.yml` GitHub Actions workflow publishes releases through
+npm trusted publishing, with signed provenance and no npm token secret.
