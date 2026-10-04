@@ -70,8 +70,8 @@ meshes live on a canvas with poppygl.
 Code appears at left and 3D renders at right. Authored centerlines are resolved
 fixtures, separate from automatic routing and sagging. SVG is used only to lay
 out labels and PNGs; there are no SVG cable drawings. Geometry generation
-remains outside this spec package. Snapshot tests bundle an OFL font for
-annotations and produce diff images on failure.
+remains outside this spec package. Snapshot annotations use `@tscircuit/alphabet` stroke glyphs and produce diff
+images on failure.
 
 ## Dimensions and references
 
