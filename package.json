@@ -2,10 +2,10 @@
   "name": "@tscircuit/cableprinter",
   "version": "0.0.2",
   "description": "Cable definition DSL and schemas for tscircuit assemblies",
-  "module": "lib/index.ts",
+  "module": "dist/index.js",
   "type": "module",
   "files": [
-    "lib"
+    "dist"
   ],
   "license": "MIT",
   "repository": {
@@ -13,7 +13,8 @@
     "url": "https://github.com/tscircuit/cableprinter.git"
   },
   "publishConfig": {
-    "registry": "https://npm.pkg.github.com"
+    "registry": "https://registry.npmjs.org/",
+    "access": "public"
   },
   "scripts": {
     "test": "bun test",
@@ -22,7 +23,10 @@
     "format:check": "biome format .",
     "start": "cosmos",
     "build:site": "cosmos-export",
-    "test:update": "BUN_UPDATE_SNAPSHOTS=1 bun test"
+    "test:update": "BUN_UPDATE_SNAPSHOTS=1 bun test",
+    "build": "tsup lib/index.ts --format esm --dts --clean",
+    "prepack": "bun run build",
+    "test:package": "bun run build && node tests/package-smoke.mjs"
   },
   "dependencies": {
     "zod": "^3.25.76"
@@ -36,7 +40,7 @@
     "@types/react": "^19.0.0",
     "@types/react-dom": "^19.0.0",
     "gl-matrix": "^3.4.4",
-    "jscad-electronics": "https://pkg.pr.new/tscircuit/jscad-electronics@4a1b9e1",
+    "jscad-electronics": "^0.0.187",
     "looks-same": "^10.0.1",
     "poppygl": "0.0.30",
     "react": "^19.1.1",
@@ -44,6 +48,15 @@
     "react-cosmos-plugin-vite": "^7.0.0",
     "react-dom": "^19.1.1",
     "typescript": "^5.9.3",
-    "vite": "^7.1.7"
+    "vite": "^7.1.7",
+    "tsup": "^8.5.0"
+  },
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
   }
 }

@@ -4,6 +4,10 @@ Physical cable definitions for tscircuit assemblies: connector pairs, connector
 dimensions, insulated wires and jacket cross sections. This package defines the
 cable independently of its placement, route and 3D mesh.
 
+```sh
+npm install @tscircuit/cableprinter
+```
+
 ```ts
 import { getCableDefinition, parseCableString } from "@tscircuit/cableprinter"
 
