@@ -1,0 +1,67 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1252" height="874" viewBox="0 0 1252 874" font-family="Roboto Mono, monospace"><rect width="100%" height="100%" fill="#eef2f6"/><text xml:space="preserve" x="28" y="46" font-size="27" fill="#14253b">JST / pin count and pitch comparison</text><text xml:space="preserve" x="28" y="78" font-size="15" fill="#485b72">Mating faces share one scale. White housings / aligned contact centers.</text><g transform="translate(24 130)">
+        <rect width="388" height="328" rx="14" fill="#fff"/>
+        <text xml:space="preserve" x="20" y="34" font-size="20" fill="#14253b">SH / 1 mm / 2 pins</text>
+        <text xml:space="preserve" x="20" y="63" font-size="15" fill="#485b72">&quot;jst_sh_pins2&quot;</text>
+        <g transform="translate(194 132) scale(16)"><rect x="-1.5" y="-1.4" width="3" height="2.8" rx=".18" fill="#faf8eb" stroke="#8293a5" stroke-width=".12"/>
+      <rect x="-1.3" y="-1.75" width="2.6" height=".45" rx=".12" fill="#e8e5d8" stroke="#8293a5" stroke-width=".08"/><rect x="-0.75" y="-0.25" width="0.5" height="0.5" rx=".08" fill="#263449"/><rect x="-0.625" y="-0.125" width="0.25" height="0.25" fill="#b6a778"/><rect x="0.25" y="-0.25" width="0.5" height="0.5" rx=".08" fill="#263449"/><rect x="0.375" y="-0.125" width="0.25" height="0.25" fill="#b6a778"/>
+      <path d="M-1.15,1.2 l.6,0 l-.3,-.45 z" fill="#566b80"/></g>
+        <g transform="translate(194 264) rotate(-90) scale(9)"><rect x="0" y="-1.5" width="5" height="3" rx=".4" fill="#f7f4e7" stroke="#7a8fa4" stroke-width=".22"/>
+      <rect x="0" y="-1.5" width=".8" height="3" fill="#e0dccb"/>
+      <rect x="3" y="-0.8" width="1.3" height=".6" fill="#c5c8bc" rx=".1"/><rect x="3" y="0.2" width="1.3" height=".6" fill="#c5c8bc" rx=".1"/></g>
+        <text xml:space="preserve" x="20" y="294" font-size="15" fill="#485b72">3 x 2.8 x 5 mm</text>
+      </g><g transform="translate(432 130)">
+        <rect width="388" height="328" rx="14" fill="#fff"/>
+        <text xml:space="preserve" x="20" y="34" font-size="20" fill="#14253b">SH / 1 mm / 4 pins</text>
+        <text xml:space="preserve" x="20" y="63" font-size="15" fill="#485b72">&quot;jst_sh_pins4&quot;</text>
+        <g transform="translate(194 132) scale(16)"><rect x="-2.5" y="-1.4" width="5" height="2.8" rx=".18" fill="#faf8eb" stroke="#8293a5" stroke-width=".12"/>
+      <rect x="-2.3" y="-1.75" width="4.6" height=".45" rx=".12" fill="#e8e5d8" stroke="#8293a5" stroke-width=".08"/><rect x="-1.75" y="-0.25" width="0.5" height="0.5" rx=".08" fill="#263449"/><rect x="-1.625" y="-0.125" width="0.25" height="0.25" fill="#b6a778"/><rect x="-0.75" y="-0.25" width="0.5" height="0.5" rx=".08" fill="#263449"/><rect x="-0.625" y="-0.125" width="0.25" height="0.25" fill="#b6a778"/><rect x="0.25" y="-0.25" width="0.5" height="0.5" rx=".08" fill="#263449"/><rect x="0.375" y="-0.125" width="0.25" height="0.25" fill="#b6a778"/><rect x="1.25" y="-0.25" width="0.5" height="0.5" rx=".08" fill="#263449"/><rect x="1.375" y="-0.125" width="0.25" height="0.25" fill="#b6a778"/>
+      <path d="M-2.15,1.2 l.6,0 l-.3,-.45 z" fill="#566b80"/></g>
+        <g transform="translate(194 264) rotate(-90) scale(9)"><rect x="0" y="-2.5" width="5" height="5" rx=".4" fill="#f7f4e7" stroke="#7a8fa4" stroke-width=".22"/>
+      <rect x="0" y="-2.5" width=".8" height="5" fill="#e0dccb"/>
+      <rect x="3" y="-1.8" width="1.3" height=".6" fill="#c5c8bc" rx=".1"/><rect x="3" y="-0.8" width="1.3" height=".6" fill="#c5c8bc" rx=".1"/><rect x="3" y="0.2" width="1.3" height=".6" fill="#c5c8bc" rx=".1"/><rect x="3" y="1.2" width="1.3" height=".6" fill="#c5c8bc" rx=".1"/></g>
+        <text xml:space="preserve" x="20" y="294" font-size="15" fill="#485b72">5 x 2.8 x 5 mm</text>
+      </g><g transform="translate(840 130)">
+        <rect width="388" height="328" rx="14" fill="#fff"/>
+        <text xml:space="preserve" x="20" y="34" font-size="20" fill="#14253b">SH / 1 mm / 6 pins</text>
+        <text xml:space="preserve" x="20" y="63" font-size="15" fill="#485b72">&quot;jst_sh_pins6&quot;</text>
+        <g transform="translate(194 132) scale(16)"><rect x="-3.5" y="-1.4" width="7" height="2.8" rx=".18" fill="#faf8eb" stroke="#8293a5" stroke-width=".12"/>
+      <rect x="-3.3" y="-1.75" width="6.6" height=".45" rx=".12" fill="#e8e5d8" stroke="#8293a5" stroke-width=".08"/><rect x="-2.75" y="-0.25" width="0.5" height="0.5" rx=".08" fill="#263449"/><rect x="-2.625" y="-0.125" width="0.25" height="0.25" fill="#b6a778"/><rect x="-1.75" y="-0.25" width="0.5" height="0.5" rx=".08" fill="#263449"/><rect x="-1.625" y="-0.125" width="0.25" height="0.25" fill="#b6a778"/><rect x="-0.75" y="-0.25" width="0.5" height="0.5" rx=".08" fill="#263449"/><rect x="-0.625" y="-0.125" width="0.25" height="0.25" fill="#b6a778"/><rect x="0.25" y="-0.25" width="0.5" height="0.5" rx=".08" fill="#263449"/><rect x="0.375" y="-0.125" width="0.25" height="0.25" fill="#b6a778"/><rect x="1.25" y="-0.25" width="0.5" height="0.5" rx=".08" fill="#263449"/><rect x="1.375" y="-0.125" width="0.25" height="0.25" fill="#b6a778"/><rect x="2.25" y="-0.25" width="0.5" height="0.5" rx=".08" fill="#263449"/><rect x="2.375" y="-0.125" width="0.25" height="0.25" fill="#b6a778"/>
+      <path d="M-3.15,1.2 l.6,0 l-.3,-.45 z" fill="#566b80"/></g>
+        <g transform="translate(194 264) rotate(-90) scale(9)"><rect x="0" y="-3.5" width="5" height="7" rx=".4" fill="#f7f4e7" stroke="#7a8fa4" stroke-width=".22"/>
+      <rect x="0" y="-3.5" width=".8" height="7" fill="#e0dccb"/>
+      <rect x="3" y="-2.8" width="1.3" height=".6" fill="#c5c8bc" rx=".1"/><rect x="3" y="-1.8" width="1.3" height=".6" fill="#c5c8bc" rx=".1"/><rect x="3" y="-0.8" width="1.3" height=".6" fill="#c5c8bc" rx=".1"/><rect x="3" y="0.2" width="1.3" height=".6" fill="#c5c8bc" rx=".1"/><rect x="3" y="1.2" width="1.3" height=".6" fill="#c5c8bc" rx=".1"/><rect x="3" y="2.2" width="1.3" height=".6" fill="#c5c8bc" rx=".1"/></g>
+        <text xml:space="preserve" x="20" y="294" font-size="15" fill="#485b72">7 x 2.8 x 5 mm</text>
+      </g><g transform="translate(24 480)">
+        <rect width="388" height="328" rx="14" fill="#fff"/>
+        <text xml:space="preserve" x="20" y="34" font-size="20" fill="#14253b">PH / 2 mm / 2 pins</text>
+        <text xml:space="preserve" x="20" y="63" font-size="15" fill="#485b72">&quot;jst_ph_pins2&quot;</text>
+        <g transform="translate(194 132) scale(16)"><rect x="-2.9" y="-2.25" width="5.8" height="4.5" rx=".18" fill="#faf8eb" stroke="#8293a5" stroke-width=".12"/>
+      <rect x="-2.6999999999999997" y="-2.6" width="5.3999999999999995" height=".45" rx=".12" fill="#e8e5d8" stroke="#8293a5" stroke-width=".08"/><rect x="-1.425" y="-0.425" width="0.85" height="0.85" rx=".08" fill="#263449"/><rect x="-1.2125" y="-0.2125" width="0.425" height="0.425" fill="#b6a778"/><rect x="0.575" y="-0.425" width="0.85" height="0.85" rx=".08" fill="#263449"/><rect x="0.7875" y="-0.2125" width="0.425" height="0.425" fill="#b6a778"/>
+      <path d="M-2.55,2.05 l.6,0 l-.3,-.45 z" fill="#566b80"/></g>
+        <g transform="translate(194 264) rotate(-90) scale(9)"><rect x="0" y="-2.9" width="6.85" height="5.8" rx=".4" fill="#f7f4e7" stroke="#7a8fa4" stroke-width=".22"/>
+      <rect x="0" y="-2.9" width=".8" height="5.8" fill="#e0dccb"/>
+      <rect x="4.85" y="-1.3" width="1.3" height=".6" fill="#c5c8bc" rx=".1"/><rect x="4.85" y="0.7" width="1.3" height=".6" fill="#c5c8bc" rx=".1"/></g>
+        <text xml:space="preserve" x="20" y="294" font-size="15" fill="#485b72">5.8 x 4.5 x 6.85 mm</text>
+      </g><g transform="translate(432 480)">
+        <rect width="388" height="328" rx="14" fill="#fff"/>
+        <text xml:space="preserve" x="20" y="34" font-size="20" fill="#14253b">PH / 2 mm / 4 pins</text>
+        <text xml:space="preserve" x="20" y="63" font-size="15" fill="#485b72">&quot;jst_ph_pins4&quot;</text>
+        <g transform="translate(194 132) scale(16)"><rect x="-4.9" y="-2.25" width="9.8" height="4.5" rx=".18" fill="#faf8eb" stroke="#8293a5" stroke-width=".12"/>
+      <rect x="-4.7" y="-2.6" width="9.4" height=".45" rx=".12" fill="#e8e5d8" stroke="#8293a5" stroke-width=".08"/><rect x="-3.425" y="-0.425" width="0.85" height="0.85" rx=".08" fill="#263449"/><rect x="-3.2125" y="-0.2125" width="0.425" height="0.425" fill="#b6a778"/><rect x="-1.425" y="-0.425" width="0.85" height="0.85" rx=".08" fill="#263449"/><rect x="-1.2125" y="-0.2125" width="0.425" height="0.425" fill="#b6a778"/><rect x="0.575" y="-0.425" width="0.85" height="0.85" rx=".08" fill="#263449"/><rect x="0.7875" y="-0.2125" width="0.425" height="0.425" fill="#b6a778"/><rect x="2.575" y="-0.425" width="0.85" height="0.85" rx=".08" fill="#263449"/><rect x="2.7875" y="-0.2125" width="0.425" height="0.425" fill="#b6a778"/>
+      <path d="M-4.550000000000001,2.05 l.6,0 l-.3,-.45 z" fill="#566b80"/></g>
+        <g transform="translate(194 264) rotate(-90) scale(9)"><rect x="0" y="-4.9" width="6.85" height="9.8" rx=".4" fill="#f7f4e7" stroke="#7a8fa4" stroke-width=".22"/>
+      <rect x="0" y="-4.9" width=".8" height="9.8" fill="#e0dccb"/>
+      <rect x="4.85" y="-3.3" width="1.3" height=".6" fill="#c5c8bc" rx=".1"/><rect x="4.85" y="-1.3" width="1.3" height=".6" fill="#c5c8bc" rx=".1"/><rect x="4.85" y="0.7" width="1.3" height=".6" fill="#c5c8bc" rx=".1"/><rect x="4.85" y="2.7" width="1.3" height=".6" fill="#c5c8bc" rx=".1"/></g>
+        <text xml:space="preserve" x="20" y="294" font-size="15" fill="#485b72">9.8 x 4.5 x 6.85 mm</text>
+      </g><g transform="translate(840 480)">
+        <rect width="388" height="328" rx="14" fill="#fff"/>
+        <text xml:space="preserve" x="20" y="34" font-size="20" fill="#14253b">PH / 2 mm / 6 pins</text>
+        <text xml:space="preserve" x="20" y="63" font-size="15" fill="#485b72">&quot;jst_ph_pins6&quot;</text>
+        <g transform="translate(194 132) scale(16)"><rect x="-6.9" y="-2.25" width="13.8" height="4.5" rx=".18" fill="#faf8eb" stroke="#8293a5" stroke-width=".12"/>
+      <rect x="-6.7" y="-2.6" width="13.4" height=".45" rx=".12" fill="#e8e5d8" stroke="#8293a5" stroke-width=".08"/><rect x="-5.425" y="-0.425" width="0.85" height="0.85" rx=".08" fill="#263449"/><rect x="-5.2125" y="-0.2125" width="0.425" height="0.425" fill="#b6a778"/><rect x="-3.425" y="-0.425" width="0.85" height="0.85" rx=".08" fill="#263449"/><rect x="-3.2125" y="-0.2125" width="0.425" height="0.425" fill="#b6a778"/><rect x="-1.425" y="-0.425" width="0.85" height="0.85" rx=".08" fill="#263449"/><rect x="-1.2125" y="-0.2125" width="0.425" height="0.425" fill="#b6a778"/><rect x="0.575" y="-0.425" width="0.85" height="0.85" rx=".08" fill="#263449"/><rect x="0.7875" y="-0.2125" width="0.425" height="0.425" fill="#b6a778"/><rect x="2.575" y="-0.425" width="0.85" height="0.85" rx=".08" fill="#263449"/><rect x="2.7875" y="-0.2125" width="0.425" height="0.425" fill="#b6a778"/><rect x="4.575" y="-0.425" width="0.85" height="0.85" rx=".08" fill="#263449"/><rect x="4.7875" y="-0.2125" width="0.425" height="0.425" fill="#b6a778"/>
+      <path d="M-6.550000000000001,2.05 l.6,0 l-.3,-.45 z" fill="#566b80"/></g>
+        <g transform="translate(194 264) rotate(-90) scale(9)"><rect x="0" y="-6.9" width="6.85" height="13.8" rx=".4" fill="#f7f4e7" stroke="#7a8fa4" stroke-width=".22"/>
+      <rect x="0" y="-6.9" width=".8" height="13.8" fill="#e0dccb"/>
+      <rect x="4.85" y="-5.3" width="1.3" height=".6" fill="#c5c8bc" rx=".1"/><rect x="4.85" y="-3.3" width="1.3" height=".6" fill="#c5c8bc" rx=".1"/><rect x="4.85" y="-1.3" width="1.3" height=".6" fill="#c5c8bc" rx=".1"/><rect x="4.85" y="0.7" width="1.3" height=".6" fill="#c5c8bc" rx=".1"/><rect x="4.85" y="2.7" width="1.3" height=".6" fill="#c5c8bc" rx=".1"/><rect x="4.85" y="4.7" width="1.3" height=".6" fill="#c5c8bc" rx=".1"/></g>
+        <text xml:space="preserve" x="20" y="294" font-size="15" fill="#485b72">13.8 x 4.5 x 6.85 mm</text>
+      </g><text xml:space="preserve" x="28" y="847" font-size="14" fill="#485b72">Body dimensions: width x height x depth. SH without side protrusions; PH PHR housings.</text></svg>

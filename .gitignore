@@ -1,0 +1,6 @@
+node_modules
+.cursor
+bun.lock
+cosmos-export
+dist
+tests/**/__snapshots__/*.diff.png
