@@ -47,7 +47,7 @@ exit along +z. An assembly places these local frames at its resolved endpoints.
 
 ![Common cables with definition code and connector details](tests/__snapshots__/common-cables.snap.png)
 
-![JST SH and PH pin-count comparisons at the same face scale](tests/__snapshots__/jst-pin-counts.snap.png)
+![JST SH and PH 3D pin-count comparisons at a common camera scale](tests/__snapshots__/jst-pin-counts.snap.png)
 
 ![Three independent cables in a device](tests/__snapshots__/multi-cable-device.snap.png)
 
@@ -56,17 +56,22 @@ bun install
 bun run start        # Cosmos: common cables, JST variants, multiple cables, playground
 bun run build:site   # Static Cosmos gallery in cosmos-export/
 bun test
-bun run test:update  # Explicitly regenerate annotated PNG/SVG snapshots
+bun run test:update  # Explicitly regenerate annotated PNG snapshots
 bun run typecheck
 bun run format:check
 ```
 
-The gallery uses SVG illustrations, with code at left and cable/connector
-details at right. Its authored curves are presentation fixtures. They do not
-implement automatic routing, sagging or clearance checks. The illustrations
-live outside `lib` and are not included in the published package. Snapshot tests
-use a bundled OFL font for consistent rendering across platforms and produce
-diff images on failure.
+The snapshots render actual indexed triangle meshes with poppygl. Meshes come
+from `jscad-electronics/cables`, consumed as a dev dependency. The gallery
+includes isometric cable assemblies, connector close-ups, JST pin-count
+comparisons and three separate cables in one scene. The playground renders
+meshes live on a canvas with poppygl.
+
+Code appears at left and 3D renders at right. Authored centerlines are resolved
+fixtures, separate from automatic routing and sagging. SVG is used only to lay
+out labels and PNGs; there are no SVG cable drawings. Geometry generation
+remains outside this spec package. Snapshot tests bundle an OFL font for
+annotations and produce diff images on failure.
 
 ## Dimensions and references
 
@@ -81,7 +86,7 @@ diff images on failure.
   representative visualization defaults.
 - [Interpower cord-set reference](https://www.interpower.com/docs/connections_2_6-04.pdf):
   NEMA 5-15 to IEC C13 with representative 6.2 mm jacket diameter (3 x 18 AWG SVT).
-  Molded body dimensions and contact illustrations are representative envelopes.
+  Molded body dimensions and contact geometry are representative visualization models.
 
 These definitions support assembly visualization, not connector manufacturing
 or electrical certification.
@@ -90,8 +95,8 @@ or electrical certification.
 
 `lib` contains schemas, defaults and string parsing. World endpoints and the
 resolved cable path belong to the assembly/routing layer and Circuit JSON.
-Mesh generation belongs in a separate renderer (for example jscad-electronics
-or a Manifold adapter). The renderer consumes the definition and resolved path;
+Mesh generation is provided by `jscad-electronics/cables`. It consumes the
+definition and resolved path;
 it should not choose or recompute the route. Several cables are simply several
 independent definitions, each paired with its own path.
 

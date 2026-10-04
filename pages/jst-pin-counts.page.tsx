@@ -1,4 +1,9 @@
-import { jstComparisonSvg } from "./components/jst-comparison-svg"
-import { SvgPreview } from "./components/svg-preview"
+import snapshotUrl from "../tests/__snapshots__/jst-pin-counts.snap.png?url"
 
-export default <SvgPreview svg={jstComparisonSvg()} />
+export default (
+  <img
+    src={snapshotUrl}
+    alt="3D cable meshes rendered with poppygl"
+    style={{ width: "100%", maxWidth: 1720 }}
+  />
+)

@@ -1,4 +1,9 @@
-import { multiCableSvg } from "./components/multi-cable-svg"
-import { SvgPreview } from "./components/svg-preview"
+import snapshotUrl from "../tests/__snapshots__/multi-cable-device.snap.png?url"
 
-export default <SvgPreview svg={multiCableSvg()} />
+export default (
+  <img
+    src={snapshotUrl}
+    alt="3D cable meshes rendered with poppygl"
+    style={{ width: "100%", maxWidth: 1720 }}
+  />
+)

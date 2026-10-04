@@ -1,28 +1,30 @@
-import { useState } from "react"
+import { useMemo, useState } from "react"
 import {
   cableStandardSchema,
   type CableStandard,
   getCableDefinition,
 } from "../lib"
-import { cableExamples } from "./cable-examples"
-import { singleCableSvg } from "./components/catalog-svg"
-import { SvgPreview } from "./components/svg-preview"
+import { previewCableMeshes, previewConnectorMeshes } from "./cable-meshes"
+import { MeshCanvas } from "./components/mesh-canvas"
 
 export default function Playground() {
   const [standard, setStandard] = useState<CableStandard>("jst_sh")
   const [pinCount, setPinCount] = useState(4)
   const isJst = standard === "jst_sh" || standard === "jst_ph"
-  const cableInput = isJst ? { standard, pinCount } : { standard }
-  const cable = getCableDefinition(cableInput)
-  const example = cableExamples.find(
-    (example) => example.cable.standard === standard,
-  )!
+  const definition = useMemo(
+    () => getCableDefinition(isJst ? { standard, pinCount } : { standard }),
+    [standard, pinCount, isJst],
+  )
+  const meshes = useMemo(() => previewCableMeshes(definition), [definition])
+  const connectorMeshes = useMemo(
+    () => previewConnectorMeshes({ definition }),
+    [definition],
+  )
   return (
     <>
-      <h1>Cable definition playground</h1>
+      <h1>3D cable mesh playground</h1>
       <p>
-        Change the physical definition; the presentation curve stays
-        independent.
+        Actual triangle meshes from jscad-electronics, rendered with poppygl.
       </p>
       <label>
         Standard{" "}
@@ -50,20 +52,17 @@ export default function Playground() {
           {pinCount}
         </label>
       )}
-      <SvgPreview
-        svg={singleCableSvg({
-          ...example,
-          cable,
-          subtitle: isJst
-            ? `${pinCount} positions / matching conductor count`
-            : example.subtitle,
-          code: JSON.stringify(cableInput, null, 2).split("\n"),
-          annotation: `${cable.connectorA.bodyWidth} x ${cable.connectorA.bodyHeight} x ${cable.connectorA.bodyDepth} mm connector A body`,
-        })}
-      />
+      <div style={{ display: "flex", gap: 24, marginTop: 24 }}>
+        <MeshCanvas meshes={meshes} />
+        <MeshCanvas meshes={connectorMeshes} detail />
+      </div>
+      <p>
+        {meshes.reduce((count, mesh) => count + mesh.indices.length / 3, 0)}{" "}
+        triangles / {meshes.length} material meshes
+      </p>
       <details>
-        <summary>Normalized definition JSON</summary>
-        <pre>{JSON.stringify(cable, null, 2)}</pre>
+        <summary>Definition JSON</summary>
+        <pre>{JSON.stringify(definition, null, 2)}</pre>
       </details>
     </>
   )

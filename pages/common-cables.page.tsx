@@ -1,4 +1,9 @@
-import { catalogSvg } from "./components/catalog-svg"
-import { SvgPreview } from "./components/svg-preview"
+import snapshotUrl from "../tests/__snapshots__/common-cables.snap.png?url"
 
-export default <SvgPreview svg={catalogSvg()} />
+export default (
+  <img
+    src={snapshotUrl}
+    alt="3D cable meshes rendered with poppygl"
+    style={{ width: "100%", maxWidth: 1720 }}
+  />
+)
