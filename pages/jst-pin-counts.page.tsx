@@ -1,0 +1,9 @@
+import snapshotUrl from "../tests/__snapshots__/jst-pin-counts.snap.png?url"
+
+export default (
+  <img
+    src={snapshotUrl}
+    alt="3D cable meshes rendered with poppygl"
+    style={{ width: "100%", maxWidth: 1720 }}
+  />
+)
