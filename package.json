@@ -1,6 +1,6 @@
 {
   "name": "@tscircuit/cableprinter",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Cable definition DSL and schemas for tscircuit assemblies",
   "module": "lib/index.ts",
   "type": "module",
