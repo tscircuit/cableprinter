@@ -149,7 +149,10 @@ defaults to 2 mm and color to `#263449`. Dimensions describe representative
 solder bullets with gold contacts, male spring slots, female socket recesses,
 and solder cups. Nominal contact diameter differs from socket outer diameter.
 They are visualization models, not manufacturer-specific fabrication drawings.
-The gallery pairs code with actual meshes for every supported diameter.
+The separate bullet gallery pairs code with actual meshes for every supported
+diameter and a three-contact cable.
+
+![Single and grouped bullet connectors](tests/__snapshots__/bullet-cables.snap.png)
 
 Grouped bullets use `bullet3_3.5mm` (three male/female contact pairs) or
 `bullet3_3.5mm_female_male`. The object form adds `pinCount: 3`; counts 1–16

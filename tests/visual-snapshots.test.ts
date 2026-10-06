@@ -11,7 +11,7 @@ test("common cables render actual 3D meshes with poppygl", async () => {
     name: "common-cables",
     png: await renderCableCatalog(),
   })
-}, 30000)
+})
 test("JST variants show three-dimensional housings and conductor counts", async () => {
   await expectPngSnapshot({
     name: "jst-pin-counts",
