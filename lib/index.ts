@@ -12,3 +12,10 @@ export {
 export type { CableConnector, CableDefinition } from "./cable-definition"
 export { getCableDefinition } from "./get-cable-definition"
 export { parseCableString } from "./parse-cable-string"
+
+export {
+  bulletDiameterSchema,
+  bulletGenderSchema,
+  getBulletConnector,
+} from "./bullet-connector"
+export type { BulletDiameter, BulletGender } from "./bullet-connector"

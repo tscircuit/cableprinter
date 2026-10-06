@@ -8,6 +8,7 @@ import {
 import { encodePNG } from "poppygl"
 import { getCableDefinition, parseCableString } from "../../lib"
 import { cableExamples } from "../../pages/cable-examples"
+import { bulletCableExamples } from "../../pages/bullet-cable-examples"
 import {
   previewCableMeshes,
   previewConnectorMeshes,
@@ -193,6 +194,103 @@ export async function renderCableCatalog(): Promise<Uint8Array> {
     }),
   )
   return compose({ width, height: 1890, content })
+}
+
+export async function renderBulletCatalog(): Promise<Uint8Array> {
+  const width = 1720
+  const rowHeight = 440
+  const content = [
+    label({
+      text: "Bullet connectors / single and grouped cable meshes",
+      x: 28,
+      y: 44,
+      size: 28,
+    }),
+  ]
+  for (const [index, example] of bulletCableExamples.entries()) {
+    const y = 82 + index * rowHeight
+    content.push(
+      `<rect x="20" y="${y}" width="1680" height="422" rx="12" fill="#fff"/>`,
+      label({ text: example.title, x: 40, y: y + 35, size: 23 }),
+      `<rect x="34" y="${y + 60}" width="416" height="285" rx="8" fill="#f1f4f8"/>`,
+      ...[
+        "const definition =",
+        `  parseCableString("${example.cableString}")`,
+        "",
+        "const meshes = createCableMeshes({",
+        "  definition,",
+        "  path: resolvedPath,",
+        "})",
+      ].map((text, line) =>
+        label({ text, x: 48, y: y + 94 + line * 25, size: 17 }),
+      ),
+      label({
+        text: "CABLE ASSEMBLY / ISOMETRIC",
+        x: 485,
+        y: y + 67,
+        size: 14,
+      }),
+      await meshImage({
+        meshes: previewCableMeshes(example.cable),
+        x: 460,
+        y: y + 80,
+        width: 720,
+        height: 300,
+      }),
+      label({
+        text:
+          example.cable.standard === "bullet"
+            ? "MALE / FEMALE CONTACTS"
+            : "CONNECTOR DETAIL",
+        x: 1220,
+        y: y + 67,
+        size: 14,
+      }),
+      await meshImage({
+        meshes: previewConnectorMeshes({ definition: example.cable }),
+        x: 1200,
+        y: y + 88,
+        width:
+          example.cable.standard === "us_mains" ||
+          example.cable.standard === "bullet"
+            ? 230
+            : 460,
+        height: 265,
+        detail: true,
+      }),
+      label({ text: example.annotation, x: 40, y: y + 397, size: 17 }),
+    )
+    if (
+      example.cable.standard === "us_mains" ||
+      example.cable.standard === "bullet"
+    )
+      content.push(
+        await meshImage({
+          meshes: previewConnectorMeshes({
+            definition: example.cable,
+            end: "B",
+          }),
+          x: 1430,
+          y: y + 88,
+          width: 230,
+          height: 265,
+          detail: true,
+        }),
+      )
+  }
+  content.push(
+    label({
+      text: "Actual indexed meshes / supplied fixture paths / routing and sagging remain separate",
+      x: 28,
+      y: 82 + bulletCableExamples.length * rowHeight + 20,
+      size: 17,
+    }),
+  )
+  return compose({
+    width,
+    height: 82 + bulletCableExamples.length * rowHeight + 50,
+    content,
+  })
 }
 
 export async function renderJstComparison(): Promise<Uint8Array> {

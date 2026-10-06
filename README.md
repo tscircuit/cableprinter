@@ -124,3 +124,45 @@ npm install @tscircuit/cableprinter
 
 The `bun-pver-release.yml` GitHub Actions workflow publishes releases through
 npm trusted publishing, with signed provenance and no npm token secret.
+
+
+## Bullet connectors
+
+`bullet_d3.5mm` defaults to a male-to-female single-wire cable. Specify both end
+genders with `bullet_d3.5mm_afemale_bmale`, `bullet_d4mm_amale_bmale`, or
+`bullet_d4mm_afemale_bfemale`. Supported nominal mating diameters are 2, 3, 3.5,
+4, 5, 5.5, 6, and 8 mm. Size is required; no connector diameter is inferred.
+
+```ts
+getCableDefinition({
+  standard: "bullet",
+  diameter: 3.5,
+  genderA: "male",
+  genderB: "female",
+  wireDiameter: 2, // insulation included, mm
+  color: "#df4049",
+})
+```
+
+End genders default independently to male at A and female at B; wire diameter
+defaults to 2 mm and color to `#263449`. Dimensions describe representative
+solder bullets with gold contacts, male spring slots, female socket recesses,
+and solder cups. Nominal contact diameter differs from socket outer diameter.
+They are visualization models, not manufacturer-specific fabrication drawings.
+The separate bullet gallery pairs code with actual meshes for every supported
+diameter and a three-contact cable.
+
+![Single and grouped bullet connectors](tests/__snapshots__/bullet-cables.snap.png)
+
+Grouped bullets use `bullet3_d3.5mm` (three male/female contact pairs) or
+`bullet3_d3.5mm_afemale_bmale`. The object form adds `pinCount: 3`; counts 1–16
+are supported and default to 1. Each contact has its own insulated wire,
+spaced at nominal diameter + 2 mm, with distinct display colors. The contact
+count and diameter must match at both ends.
+
+All modifiers are named and can appear in any order: `d` specifies the nominal
+diameter, `a` specifies end A's gender, and `b` specifies end B's gender.
+For example, `bullet3_bmale_d3.5mm_afemale` is equivalent to
+`bullet3_d3.5mm_afemale_bmale`. Each end's gender is optional and defaults
+independently. Positional modifiers, unknown names, and duplicate parameters
+are rejected.
