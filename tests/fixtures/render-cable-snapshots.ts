@@ -196,18 +196,21 @@ export async function renderCableCatalog(): Promise<Uint8Array> {
   return compose({ width, height: 1890, content })
 }
 
-export async function renderBulletCatalog(): Promise<Uint8Array> {
+export async function renderBulletCatalog(
+  examples = bulletCableExamples,
+  title = "Bullet connectors / single and grouped cable meshes",
+): Promise<Uint8Array> {
   const width = 1720
   const rowHeight = 440
   const content = [
     label({
-      text: "Bullet connectors / single and grouped cable meshes",
+      text: title,
       x: 28,
       y: 44,
       size: 28,
     }),
   ]
-  for (const [index, example] of bulletCableExamples.entries()) {
+  for (const [index, example] of examples.entries()) {
     const y = 82 + index * rowHeight
     content.push(
       `<rect x="20" y="${y}" width="1680" height="422" rx="12" fill="#fff"/>`,
@@ -215,7 +218,9 @@ export async function renderBulletCatalog(): Promise<Uint8Array> {
       `<rect x="34" y="${y + 60}" width="416" height="285" rx="8" fill="#f1f4f8"/>`,
       ...[
         "const definition =",
-        `  parseCableString("${example.cableString}")`,
+        ...(example.cableString.length > 24
+          ? ["  parseCableString(", `    "${example.cableString}"`, "  )"]
+          : [`  parseCableString("${example.cableString}")`]),
         "",
         "const meshes = createCableMeshes({",
         "  definition,",
@@ -282,13 +287,13 @@ export async function renderBulletCatalog(): Promise<Uint8Array> {
     label({
       text: "Actual indexed meshes / supplied fixture paths / routing and sagging remain separate",
       x: 28,
-      y: 82 + bulletCableExamples.length * rowHeight + 20,
+      y: 82 + examples.length * rowHeight + 20,
       size: 17,
     }),
   )
   return compose({
     width,
-    height: 82 + bulletCableExamples.length * rowHeight + 50,
+    height: 82 + examples.length * rowHeight + 50,
     content,
   })
 }

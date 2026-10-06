@@ -107,7 +107,6 @@ export const cableDefinitionSchema = z
       if (
         !("diameter" in connectorA) ||
         !("diameter" in connectorB) ||
-        connectorA.diameter !== connectorB.diameter ||
         ("pinCount" in connectorA &&
           "pinCount" in connectorB &&
           connectorA.pinCount !== connectorB.pinCount)
@@ -115,7 +114,7 @@ export const cableDefinitionSchema = z
         ctx.addIssue({
           code: z.ZodIssueCode.custom,
           message:
-            "Bullet connectors require matching nominal diameters and contact counts",
+            "Bullet connectors require supported nominal diameters and matching contact counts",
         })
       }
       if (

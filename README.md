@@ -158,7 +158,7 @@ Grouped bullets use `bullet3_d3.5mm` (three male/female contact pairs) or
 `bullet3_d3.5mm_afemale_bmale`. The object form adds `pinCount: 3`; counts 1–16
 are supported and default to 1. Each contact has its own insulated wire,
 spaced at nominal diameter + 2 mm, with distinct display colors. The contact
-count and diameter must match at both ends.
+Contact counts must match at both ends.
 
 All modifiers are named and can appear in any order: `d` specifies the nominal
 diameter, `a` specifies end A's gender, and `b` specifies end B's gender.
@@ -166,3 +166,22 @@ For example, `bullet3_bmale_d3.5mm_afemale` is equivalent to
 `bullet3_d3.5mm_afemale_bmale`. Each end's gender is optional and defaults
 independently. Positional modifiers, unknown names, and duplicate parameters
 are rejected.
+
+### Different diameters at each end
+
+`bullet3_da3.5mm_db4mm_afemale_bfemale` represents three 3.5 mm female
+contacts at A and three 4 mm female contacts at B. It mates with a motor's
+3.5 mm male outputs and a board's 4 mm male plugs. Use `bmale` for a board
+with female sockets. The optional `d` sets both ends; `da` and `db` override
+their respective ends. Without `d`, both end diameters are required.
+
+```ts
+getCableDefinition({ standard: "bullet", diameterA: 3.5, diameterB: 4,
+  pinCount: 3, genderA: "female", genderB: "female" })
+```
+
+Grouped adapter contacts use a common pitch of the larger nominal diameter
+plus 2 mm, keeping each contact centered on its own insulated wire. This
+models the complete adapter lead as one cable, without a cable-to-cable joint.
+
+![3.5 mm to 4 mm bullet adapter cables](tests/__snapshots__/bullet-adapter-cables.snap.png)

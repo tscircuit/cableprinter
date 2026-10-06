@@ -11,27 +11,40 @@ export function parseCableString(cableString: string): CableDefinition {
   const bulletMatch = /^bullet([1-9][0-9]*)?_(.+)$/.exec(cableName)
   if (bulletMatch) {
     let diameter: number | undefined
+    let diameterA: number | undefined
+    let diameterB: number | undefined
     let genderA: "male" | "female" | undefined
     let genderB: "male" | "female" | undefined
     const seen = new Set<string>()
     for (const parameter of bulletMatch[2]!.split("_")) {
       const match =
-        /^(d)([0-9]+(?:\.[0-9]+)?)mm$/.exec(parameter) ??
+        /^(d|da|db)([0-9]+(?:\.[0-9]+)?)mm$/.exec(parameter) ??
         /^(a|b)(male|female)$/.exec(parameter)
       if (!match || seen.has(match[1]!))
         throw new Error(`Invalid or duplicate bullet parameter: "${parameter}"`)
       seen.add(match[1]!)
       if (match[1] === "d") diameter = Number(match[2])
+      else if (match[1] === "da") diameterA = Number(match[2])
+      else if (match[1] === "db") diameterB = Number(match[2])
       else if (match[1] === "a") genderA = match[2] as "male" | "female"
       else genderB = match[2] as "male" | "female"
     }
-    if (diameter === undefined)
-      throw new Error(
-        "Bullet cables require a named diameter parameter, e.g. d3.5mm",
-      )
+    if (
+      diameter === undefined &&
+      (diameterA === undefined || diameterB === undefined)
+    )
+      throw new Error("Bullet cables require dNmm, or both daNmm and dbNmm")
     return getCableDefinition({
       standard: "bullet",
-      diameter: bulletDiameterSchema.parse(diameter),
+      ...(diameter !== undefined
+        ? { diameter: bulletDiameterSchema.parse(diameter) }
+        : {}),
+      ...(diameterA !== undefined
+        ? { diameterA: bulletDiameterSchema.parse(diameterA) }
+        : {}),
+      ...(diameterB !== undefined
+        ? { diameterB: bulletDiameterSchema.parse(diameterB) }
+        : {}),
       pinCount: bulletMatch[1] ? Number(bulletMatch[1]) : 1,
       genderA: genderA ?? "male",
       genderB: genderB ?? "female",
