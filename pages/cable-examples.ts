@@ -60,6 +60,23 @@ export const cableExamples = [
       "})",
     ],
   },
+  ...[2, 3, 3.5, 4, 5, 5.5, 6, 8].map((diameter) => ({
+    cableString: `bullet_${diameter}mm`,
+    title: `Bullet / ${diameter} mm`,
+    subtitle: "Gold solder bullet / male to female / single insulated wire",
+    annotation:
+      "Representative geometry; nominal mating diameter differs from socket outer diameter",
+    code: [
+      `parseCableString("bullet_${diameter}mm_male_female")`,
+      "",
+      "getCableDefinition({",
+      '  standard: "bullet",',
+      `  diameter: ${diameter},`,
+      '  genderA: "male",',
+      '  genderB: "female",',
+      "})",
+    ],
+  })),
 ].map((example) => ({
   ...example,
   cable: parseCableString(example.cableString),

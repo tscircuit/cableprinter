@@ -1,3 +1,4 @@
+import { getBulletConnector } from "./bullet-connector"
 import { type CableDefinition, cableDefinitionSchema } from "./cable-definition"
 import { type CableInput, cableInputSchema } from "./cable-input"
 
@@ -12,6 +13,24 @@ const wireColors = [
 
 export function getCableDefinition(cableInput: CableInput): CableDefinition {
   const cable = cableInputSchema.parse(cableInput)
+  if (cable.standard === "bullet") {
+    return cableDefinitionSchema.parse({
+      standard: "bullet",
+      connectorA: getBulletConnector({
+        diameter: cable.diameter,
+        gender: cable.genderA,
+      }),
+      connectorB: getBulletConnector({
+        diameter: cable.diameter,
+        gender: cable.genderB,
+      }),
+      crossSection: {
+        kind: "round_jacket",
+        diameter: cable.wireDiameter,
+        color: cable.color,
+      },
+    })
+  }
   if (cable.standard === "usb_c") {
     const connector = {
       kind: "usb_c_plug" as const,

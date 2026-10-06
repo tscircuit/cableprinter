@@ -124,3 +124,29 @@ npm install @tscircuit/cableprinter
 
 The `bun-pver-release.yml` GitHub Actions workflow publishes releases through
 npm trusted publishing, with signed provenance and no npm token secret.
+
+
+## Bullet connectors
+
+`bullet_3.5mm` defaults to a male-to-female single-wire cable. Specify both end
+genders with `bullet_3.5mm_female_male`, `bullet_4mm_male_male`, or
+`bullet_4mm_female_female`. Supported nominal mating diameters are 2, 3, 3.5,
+4, 5, 5.5, 6, and 8 mm. Size is required; no connector diameter is inferred.
+
+```ts
+getCableDefinition({
+  standard: "bullet",
+  diameter: 3.5,
+  genderA: "male",
+  genderB: "female",
+  wireDiameter: 2, // insulation included, mm
+  color: "#df4049",
+})
+```
+
+End genders default independently to male at A and female at B; wire diameter
+defaults to 2 mm and color to `#263449`. Dimensions describe representative
+solder bullets with gold contacts, male spring slots, female socket recesses,
+and solder cups. Nominal contact diameter differs from socket outer diameter.
+They are visualization models, not manufacturer-specific fabrication drawings.
+The gallery pairs code with actual meshes for every supported diameter.

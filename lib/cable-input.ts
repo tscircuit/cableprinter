@@ -1,10 +1,12 @@
 import { z } from "zod"
+import { bulletDiameterSchema, bulletGenderSchema } from "./bullet-connector"
 
 export const cableStandardSchema = z.enum([
   "usb_c",
   "jst_sh",
   "jst_ph",
   "us_mains",
+  "bullet",
 ])
 export type CableStandard = z.infer<typeof cableStandardSchema>
 
@@ -16,6 +18,16 @@ const jacket = {
 
 /** Dimensions are millimeters; wireDiameter includes insulation. */
 export const cableInputSchema = z.discriminatedUnion("standard", [
+  z
+    .object({
+      standard: z.literal("bullet"),
+      diameter: bulletDiameterSchema,
+      genderA: bulletGenderSchema.default("male"),
+      genderB: bulletGenderSchema.default("female"),
+      wireDiameter: z.number().finite().positive().default(2),
+      color: color.default("#263449"),
+    })
+    .strict(),
   z.object({ standard: z.literal("usb_c"), ...jacket }).strict(),
   z
     .object({

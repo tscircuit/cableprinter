@@ -158,18 +158,33 @@ export async function renderCableCatalog(): Promise<Uint8Array> {
         width: 720,
         height: 300,
       }),
-      label({ text: "CONNECTOR DETAIL", x: 1220, y: y + 67, size: 14 }),
+      label({
+        text:
+          example.cable.standard === "bullet"
+            ? "MALE / FEMALE CONTACTS"
+            : "CONNECTOR DETAIL",
+        x: 1220,
+        y: y + 67,
+        size: 14,
+      }),
       await meshImage({
         meshes: previewConnectorMeshes({ definition: example.cable }),
         x: 1200,
         y: y + 88,
-        width: example.cable.standard === "us_mains" ? 230 : 460,
+        width:
+          example.cable.standard === "us_mains" ||
+          example.cable.standard === "bullet"
+            ? 230
+            : 460,
         height: 265,
         detail: true,
       }),
       label({ text: example.annotation, x: 40, y: y + 397, size: 17 }),
     )
-    if (example.cable.standard === "us_mains")
+    if (
+      example.cable.standard === "us_mains" ||
+      example.cable.standard === "bullet"
+    )
       content.push(
         await meshImage({
           meshes: previewConnectorMeshes({
@@ -188,11 +203,15 @@ export async function renderCableCatalog(): Promise<Uint8Array> {
     label({
       text: "Actual indexed meshes / supplied fixture paths / routing and sagging remain separate",
       x: 28,
-      y: 1860,
+      y: 82 + cableExamples.length * rowHeight + 20,
       size: 17,
     }),
   )
-  return compose({ width, height: 1890, content })
+  return compose({
+    width,
+    height: 82 + cableExamples.length * rowHeight + 50,
+    content,
+  })
 }
 
 export async function renderJstComparison(): Promise<Uint8Array> {
