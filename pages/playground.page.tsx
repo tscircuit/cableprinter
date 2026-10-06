@@ -4,14 +4,16 @@ import {
   bulletDiameterSchema,
   type BulletDiameter,
   type BulletGender,
-  type CableStandard,
   getCableDefinition,
 } from "../lib"
 import { previewCableMeshes, previewConnectorMeshes } from "./cable-meshes"
 import { MeshCanvas } from "./components/mesh-canvas"
 
+const presetStandardSchema = cableStandardSchema.exclude(["adaptercable"])
+
 export default function Playground() {
-  const [standard, setStandard] = useState<CableStandard>("jst_sh")
+  const [standard, setStandard] =
+    useState<(typeof presetStandardSchema.options)[number]>("jst_sh")
   const [pinCount, setPinCount] = useState(4)
   const [diameter, setDiameter] = useState<BulletDiameter>(3.5)
   const [genderA, setGenderA] = useState<BulletGender>("male")
@@ -44,7 +46,7 @@ export default function Playground() {
         <select
           value={standard}
           onChange={(event) => {
-            const next = cableStandardSchema.parse(event.target.value)
+            const next = presetStandardSchema.parse(event.target.value)
             setStandard(next)
             setPinCount((count) =>
               Math.max(
@@ -54,7 +56,7 @@ export default function Playground() {
             )
           }}
         >
-          {cableStandardSchema.options.map((standard) => (
+          {presetStandardSchema.options.map((standard) => (
             <option key={standard}>{standard}</option>
           ))}
         </select>

@@ -1,6 +1,6 @@
 import { z } from "zod"
 import { bulletDiameterSchema } from "./bullet-connector"
-import { cableStandardSchema } from "./cable-input"
+import { cableStandardSchema } from "./cable-standard"
 
 const dimension = z.number().finite().positive()
 const color = z.string().regex(/^#[0-9a-fA-F]{6}$/)
@@ -96,6 +96,7 @@ export const cableDefinitionSchema = z
       jst_ph: ["jst_ph_housing", "jst_ph_housing"],
       us_mains: ["nema_5_15p", "iec_c13"],
       bullet: [connectorA.kind, connectorB.kind],
+      adaptercable: [connectorA.kind, connectorB.kind],
     }[cable.standard]
     if (connectorA.kind !== expected[0] || connectorB.kind !== expected[1]) {
       ctx.addIssue({
@@ -107,6 +108,7 @@ export const cableDefinitionSchema = z
       if (
         !("diameter" in connectorA) ||
         !("diameter" in connectorB) ||
+        connectorA.diameter !== connectorB.diameter ||
         ("pinCount" in connectorA &&
           "pinCount" in connectorB &&
           connectorA.pinCount !== connectorB.pinCount)
@@ -152,11 +154,60 @@ export const cableDefinitionSchema = z
           })
         }
       }
-    } else if ("diameter" in connectorA || "diameter" in connectorB) {
+    } else if (
+      cable.standard !== "adaptercable" &&
+      ("diameter" in connectorA || "diameter" in connectorB)
+    ) {
       ctx.addIssue({
         code: z.ZodIssueCode.custom,
         message: "Bullet connectors require the bullet cable standard",
       })
+    }
+    if (cable.standard === "adaptercable") {
+      if (
+        "pinCount" in connectorA &&
+        "pinCount" in connectorB &&
+        connectorA.pinCount !== connectorB.pinCount
+      )
+        ctx.addIssue({
+          code: z.ZodIssueCode.custom,
+          message: "Adapter connector pin counts must match",
+        })
+      if (
+        "pinCount" in connectorA &&
+        "pinCount" in connectorB &&
+        connectorA.pinCount > 1 &&
+        crossSection.kind !== "wire_bundle"
+      )
+        ctx.addIssue({
+          code: z.ZodIssueCode.custom,
+          message: "Adapter cables require one wire per explicit contact",
+        })
+      for (const connector of [connectorA, connectorB]) {
+        if (
+          "diameter" in connector &&
+          (connector.bodyHeight <= connector.diameter ||
+            connector.pitch < connector.bodyHeight ||
+            Math.abs(
+              connector.bodyWidth -
+                (connector.bodyHeight +
+                  (connector.pinCount - 1) * connector.pitch),
+            ) > 1e-6 ||
+            connector.contactDepth >= connector.bodyDepth ||
+            (connector.pinCount === 1 &&
+              (crossSection.kind !== "round_jacket" ||
+                crossSection.diameter > connector.bodyHeight)) ||
+            (connector.pinCount > 1 &&
+              (crossSection.kind !== "wire_bundle" ||
+                crossSection.wires.some(
+                  (wire) => wire.diameter > connector.bodyHeight,
+                ))))
+        )
+          ctx.addIssue({
+            code: z.ZodIssueCode.custom,
+            message: "Bullet contact, body, and wire dimensions must fit",
+          })
+      }
     }
     if (crossSection.kind === "wire_bundle") {
       for (const connector of [connectorA, connectorB]) {
@@ -169,6 +220,14 @@ export const cableDefinitionSchema = z
             message: "Bundle wire count must match each connector pin count",
           })
         }
+        if (
+          "pitch" in connector &&
+          crossSection.wires.some((wire) => wire.diameter > connector.pitch)
+        )
+          ctx.addIssue({
+            code: z.ZodIssueCode.custom,
+            message: "Insulated wires must fit each connector pitch",
+          })
       }
       if (
         crossSection.wires.some(

@@ -1,4 +1,5 @@
-import { bulletDiameterSchema, getBulletConnector } from "./bullet-connector"
+import { getBulletConnector } from "./bullet-connector"
+import { getAdapterCableDefinition } from "./get-adapter-cable-definition"
 import { type CableDefinition, cableDefinitionSchema } from "./cable-definition"
 import { type CableInput, cableInputSchema } from "./cable-input"
 
@@ -13,24 +14,19 @@ const wireColors = [
 
 export function getCableDefinition(cableInput: CableInput): CableDefinition {
   const cable = cableInputSchema.parse(cableInput)
+  if (cable.standard === "adaptercable") return getAdapterCableDefinition(cable)
   if (cable.standard === "bullet") {
-    const diameterA = bulletDiameterSchema.parse(
-      cable.diameterA ?? cable.diameter,
-    )
-    const diameterB = bulletDiameterSchema.parse(
-      cable.diameterB ?? cable.diameter,
-    )
-    const pitch = Math.max(diameterA, diameterB) + 2
+    const pitch = cable.diameter + 2
     return cableDefinitionSchema.parse({
       standard: "bullet",
       connectorA: getBulletConnector({
-        diameter: diameterA,
+        diameter: cable.diameter,
         gender: cable.genderA,
         pinCount: cable.pinCount,
         pitch,
       }),
       connectorB: getBulletConnector({
-        diameter: diameterB,
+        diameter: cable.diameter,
         gender: cable.genderB,
         pinCount: cable.pinCount,
         pitch,

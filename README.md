@@ -167,21 +167,46 @@ For example, `bullet3_bmale_d3.5mm_afemale` is equivalent to
 independently. Positional modifiers, unknown names, and duplicate parameters
 are rejected.
 
-### Different diameters at each end
+### Independent-ended adapter cables
 
-`bullet3_da3.5mm_db4mm_afemale_bfemale` represents three 3.5 mm female
-contacts at A and three 4 mm female contacts at B. It mates with a motor's
-3.5 mm male outputs and a board's 4 mm male plugs. Use `bmale` for a board
-with female sockets. The optional `d` sets both ends; `da` and `db` override
-their respective ends. Without `d`, both end diameters are required.
+The generic wrapper names two independently specified connectors:
 
-```ts
-getCableDefinition({ standard: "bullet", diameterA: 3.5, diameterB: 4,
-  pinCount: 3, genderA: "female", genderB: "female" })
+```text
+adaptercable_a(bullet3_d3.5mm_gfemale)_b(bullet3_d4mm_gfemale)
+adaptercable_a(bullet3_d3.5mm_gfemale)_b(jst_ph_pins3)
+adaptercable_a(jst_sh_pins4)_b(jst_ph_pins4)
 ```
 
-Grouped adapter contacts use a common pitch of the larger nominal diameter
-plus 2 mm, keeping each contact centered on its own insulated wire. This
-models the complete adapter lead as one cable, without a cable-to-cable joint.
+The first example mates with a motor's three 3.5 mm male outputs and a board's
+4 mm male plugs. Use `gmale` at B for female board sockets. `g` names a single
+connector's gender; `d` names its diameter. Both modifiers are required for
+bullet connector strings. A and B may appear in either order; duplicates,
+missing ends, positional parameters, nested cables, and trailing tokens fail.
+There are no `da`/`db` parameters or `diameterA`/`diameterB` object properties.
 
-![3.5 mm to 4 mm bullet adapter cables](tests/__snapshots__/bullet-adapter-cables.snap.png)
+Each end is parsed by `parseConnectorString`. Supported connector strings are
+`bullet[CONTACTS]_dNmm_gmale|gfemale`, `jst_sh[_pinsN]`, `jst_ph[_pinsN]`,
+`usb_c`, `nema_5_15p`, and `iec_c13`. `us_mains` is a two-ended cable preset,
+not a connector name. Explicit contact counts must match. The string describes
+physical mating interfaces, not electrical pin mapping or ratings.
+
+```ts
+getCableDefinition({
+  standard: "adaptercable",
+  connectorA: parseConnectorString("bullet3_d3.5mm_gfemale"),
+  connectorB: parseConnectorString("bullet3_d4mm_gfemale"),
+})
+```
+
+`getAdapterCableDefinition({ connectorA, connectorB, crossSection? })` exposes
+the same composition API. An optional cross section configures wire sizes and
+colors. Defaults use separate wires for two explicitly counted multi-contact
+ends, or a round jacket otherwise. Each end retains its native contact pitch;
+the renderer fans the wires between those pitches along the supplied route.
+Existing cable preset strings and their snapshots remain unchanged.
+
+`stringifyConnector` and `stringifyCableDefinition` emit canonical stock strings;
+custom dimensions and cross sections stay in the object API. The optional
+`useShorthand` serializer flag emits existing cable presets when applicable.
+
+![Generic adapters with independent bullet and JST connectors](tests/__snapshots__/bullet-adapter-cables.snap.png)

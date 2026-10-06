@@ -215,19 +215,41 @@ export async function renderBulletCatalog(
     content.push(
       `<rect x="20" y="${y}" width="1680" height="422" rx="12" fill="#fff"/>`,
       label({ text: example.title, x: 40, y: y + 35, size: 23 }),
-      `<rect x="34" y="${y + 60}" width="416" height="285" rx="8" fill="#f1f4f8"/>`,
+      `<rect x="34" y="${y + 60}" width="416" height="${example.cable.standard === "adaptercable" ? 315 : 285}" rx="8" fill="#f1f4f8"/>`,
       ...[
         "const definition =",
-        ...(example.cableString.length > 24
-          ? ["  parseCableString(", `    "${example.cableString}"`, "  )"]
-          : [`  parseCableString("${example.cableString}")`]),
+        ...(example.cableString.startsWith("adaptercable_")
+          ? [
+              "  parseCableString(",
+              '    "adaptercable_" +',
+              ...example.cableString
+                .slice("adaptercable_".length)
+                .split("_b(")
+                .map((part, index) =>
+                  index === 0 ? `    "${part}_" +` : `    "b(${part}"`,
+                ),
+              "  )",
+            ]
+          : example.cableString.length > 24
+            ? ["  parseCableString(", `    "${example.cableString}"`, "  )"]
+            : [`  parseCableString("${example.cableString}")`]),
         "",
-        "const meshes = createCableMeshes({",
+        ...(example.cable.standard === "adaptercable"
+          ? ["const meshes =", "  createCableMeshes({"]
+          : ["const meshes = createCableMeshes({"]),
         "  definition,",
         "  path: resolvedPath,",
         "})",
       ].map((text, line) =>
-        label({ text, x: 48, y: y + 94 + line * 25, size: 17 }),
+        label({
+          text,
+          x: 48,
+          y:
+            y +
+            94 +
+            line * (example.cable.standard === "adaptercable" ? 23 : 25),
+          size: 17,
+        }),
       ),
       label({
         text: "CABLE ASSEMBLY / ISOMETRIC",
@@ -257,6 +279,7 @@ export async function renderBulletCatalog(
         y: y + 88,
         width:
           example.cable.standard === "us_mains" ||
+          example.cable.standard === "adaptercable" ||
           example.cable.standard === "bullet"
             ? 230
             : 460,
@@ -267,6 +290,7 @@ export async function renderBulletCatalog(
     )
     if (
       example.cable.standard === "us_mains" ||
+      example.cable.standard === "adaptercable" ||
       example.cable.standard === "bullet"
     )
       content.push(
