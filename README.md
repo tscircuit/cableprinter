@@ -128,9 +128,9 @@ npm trusted publishing, with signed provenance and no npm token secret.
 
 ## Bullet connectors
 
-`bullet_3.5mm` defaults to a male-to-female single-wire cable. Specify both end
-genders with `bullet_3.5mm_female_male`, `bullet_4mm_male_male`, or
-`bullet_4mm_female_female`. Supported nominal mating diameters are 2, 3, 3.5,
+`bullet_d3.5mm` defaults to a male-to-female single-wire cable. Specify both end
+genders with `bullet_d3.5mm_afemale_bmale`, `bullet_d4mm_amale_bmale`, or
+`bullet_d4mm_afemale_bfemale`. Supported nominal mating diameters are 2, 3, 3.5,
 4, 5, 5.5, 6, and 8 mm. Size is required; no connector diameter is inferred.
 
 ```ts
@@ -154,8 +154,15 @@ diameter and a three-contact cable.
 
 ![Single and grouped bullet connectors](tests/__snapshots__/bullet-cables.snap.png)
 
-Grouped bullets use `bullet3_3.5mm` (three male/female contact pairs) or
-`bullet3_3.5mm_female_male`. The object form adds `pinCount: 3`; counts 1–16
+Grouped bullets use `bullet3_d3.5mm` (three male/female contact pairs) or
+`bullet3_d3.5mm_afemale_bmale`. The object form adds `pinCount: 3`; counts 1–16
 are supported and default to 1. Each contact has its own insulated wire,
 spaced at nominal diameter + 2 mm, with distinct display colors. The contact
-count and diameter must match at both ends. Single-contact DSLs remain valid.
+count and diameter must match at both ends.
+
+All modifiers are named and can appear in any order: `d` specifies the nominal
+diameter, `a` specifies end A's gender, and `b` specifies end B's gender.
+For example, `bullet3_bmale_d3.5mm_afemale` is equivalent to
+`bullet3_d3.5mm_afemale_bmale`. Each end's gender is optional and defaults
+independently. Positional modifiers, unknown names, and duplicate parameters
+are rejected.

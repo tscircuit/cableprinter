@@ -19,7 +19,7 @@ test("grouped bullet DSL describes one separate contact and insulated wire per c
           })
           expect(
             parseCableString(
-              `bullet${pinCount}_${diameter}mm_${genderA}_${genderB}`,
+              `bullet${pinCount}_d${diameter}mm_a${genderA}_b${genderB}`,
             ),
           ).toEqual(definition)
           expect(definition.connectorA).toMatchObject({
@@ -39,23 +39,23 @@ test("grouped bullet DSL describes one separate contact and insulated wire per c
       }
     }
   }
-  const triple = parseCableString("bullet3_3.5mm")
+  const triple = parseCableString("bullet3_d3.5mm")
   expect(triple).toEqual(
     getCableDefinition({ standard: "bullet", diameter: 3.5, pinCount: 3 }),
   )
-  expect(parseCableString("bullet1_3.5mm")).toEqual(
-    parseCableString("bullet_3.5mm"),
+  expect(parseCableString("bullet1_d3.5mm")).toEqual(
+    parseCableString("bullet_d3.5mm"),
   )
   for (const text of [
-    "bullet0_3.5mm",
-    "bullet17_3.5mm",
-    "bullet03_3.5mm",
-    "bullet3_3.5mm_male",
-    "bullet3_7mm",
+    "bullet0_d3.5mm",
+    "bullet17_d3.5mm",
+    "bullet03_d3.5mm",
+    "bullet3_d3.5mm_male",
+    "bullet3_d7mm",
   ]) {
     expect(() => parseCableString(text)).toThrow()
   }
-  const single = parseCableString("bullet_3.5mm")
+  const single = parseCableString("bullet_d3.5mm")
   expect(
     cableDefinitionSchema.safeParse({
       ...triple,

@@ -17,7 +17,7 @@ test("bullet sizes and independent end genders survive DSL and object input", ()
           genderB,
         })
         expect(
-          parseCableString(`bullet_${diameter}mm_${genderA}_${genderB}`),
+          parseCableString(`bullet_d${diameter}mm_a${genderA}_b${genderB}`),
         ).toEqual(definition)
         expect(definition.connectorA.kind).toBe(`bullet_${genderA}`)
         expect(definition.connectorB.kind).toBe(`bullet_${genderB}`)
@@ -28,20 +28,55 @@ test("bullet sizes and independent end genders survive DSL and object input", ()
         })
       }
     }
-    expect(parseCableString(`bullet_${diameter}mm`)).toEqual(
+    expect(parseCableString(`bullet_d${diameter}mm`)).toEqual(
       getCableDefinition({ standard: "bullet", diameter }),
     )
   }
 })
 
-test("invalid sizes, incomplete genders and incompatible physical definitions fail", () => {
+test("named bullet parameters are order-independent and end genders default independently", () => {
+  const expected = getCableDefinition({
+    standard: "bullet",
+    diameter: 3.5,
+    pinCount: 3,
+    genderA: "female",
+    genderB: "male",
+  })
   for (const text of [
+    "bullet3_d3.5mm_afemale_bmale",
+    "bullet3_bmale_d3.5mm_afemale",
+    "bullet3_afemale_bmale_d3.5mm",
+  ])
+    expect(parseCableString(text)).toEqual(expected)
+  expect(parseCableString("bullet_d3.5mm_afemale")).toEqual(
+    getCableDefinition({
+      standard: "bullet",
+      diameter: 3.5,
+      genderA: "female",
+    }),
+  )
+  expect(parseCableString("bullet_bmale_d3.5mm")).toEqual(
+    getCableDefinition({ standard: "bullet", diameter: 3.5, genderB: "male" }),
+  )
+})
+
+test("positional, duplicate, unknown and invalid parameters fail", () => {
+  for (const text of [
+    "bullet3_3.5mm",
+    "bullet_3.5mm_male_female",
+    "bullet3_d3.5mm_male_female",
+    "bullet3_afemale_bmale",
+    "bullet_d3.5mm_d4mm",
+    "bullet_d3.5mm_amale_afemale",
+    "bullet_d3.5mm_bmale_bfemale",
+    "bullet_d3.5mm_asocket",
+    "bullet_d3.5mm_extra",
     "bullet",
-    "bullet_0mm",
-    "bullet_7mm",
-    "bullet_3.5mm_male",
-    "bullet_4mm_male_socket",
-    "bullet_4mm_male_female_extra",
+    "bullet_d0mm",
+    "bullet_d7mm",
+    "bullet_d3.5mm_male",
+    "bullet_d4mm_male_socket",
+    "bullet_d4mm_amale_bfemale_extra",
   ]) {
     expect(() => parseCableString(text)).toThrow()
   }
