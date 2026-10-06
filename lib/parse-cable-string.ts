@@ -9,15 +9,16 @@ export function parseCableString(cableString: string): CableDefinition {
     return getCableDefinition({ standard: cableName })
   }
   const bulletMatch =
-    /^bullet_([0-9]+(?:\.[0-9]+)?)mm(?:_(male|female)_(male|female))?$/.exec(
+    /^bullet([1-9][0-9]*)?_([0-9]+(?:\.[0-9]+)?)mm(?:_(male|female)_(male|female))?$/.exec(
       cableName,
     )
   if (bulletMatch) {
     return getCableDefinition({
       standard: "bullet",
-      diameter: bulletDiameterSchema.parse(Number(bulletMatch[1])),
-      genderA: bulletMatch[2] === "female" ? "female" : "male",
-      genderB: bulletMatch[3] === "male" ? "male" : "female",
+      diameter: bulletDiameterSchema.parse(Number(bulletMatch[2])),
+      pinCount: bulletMatch[1] ? Number(bulletMatch[1]) : 1,
+      genderA: bulletMatch[3] === "female" ? "female" : "male",
+      genderB: bulletMatch[4] === "male" ? "male" : "female",
     })
   }
   const jstMatch = /^(jst_sh|jst_ph)(?:_pins([0-9]+))?$/.exec(cableName)
@@ -28,6 +29,6 @@ export function parseCableString(cableString: string): CableDefinition {
     })
   }
   throw new Error(
-    `Unsupported cable string: "${cableString}". Expected usb_c, jst_sh[_pinsN], jst_ph[_pinsN], us_mains, or bullet_Nmm[_male_female].`,
+    `Unsupported cable string: "${cableString}". Expected usb_c, jst_sh[_pinsN], jst_ph[_pinsN], us_mains, or bullet[CONTACTS]_Nmm[_male_female].`,
   )
 }

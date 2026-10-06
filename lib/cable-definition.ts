@@ -17,6 +17,8 @@ export const cableConnectorSchema = z.discriminatedUnion("kind", [
       kind: z.literal("bullet_male"),
       ...body,
       diameter: bulletDiameterSchema,
+      pinCount: z.number().int().min(1).max(16).default(1),
+      pitch: dimension,
       contactDepth: dimension,
     })
     .strict(),
@@ -25,6 +27,8 @@ export const cableConnectorSchema = z.discriminatedUnion("kind", [
       kind: z.literal("bullet_female"),
       ...body,
       diameter: bulletDiameterSchema,
+      pinCount: z.number().int().min(1).max(16).default(1),
+      pitch: dimension,
       contactDepth: dimension,
     })
     .strict(),
@@ -103,27 +107,45 @@ export const cableDefinitionSchema = z
       if (
         !("diameter" in connectorA) ||
         !("diameter" in connectorB) ||
-        connectorA.diameter !== connectorB.diameter
+        connectorA.diameter !== connectorB.diameter ||
+        ("pinCount" in connectorA &&
+          "pinCount" in connectorB &&
+          connectorA.pinCount !== connectorB.pinCount)
       ) {
         ctx.addIssue({
           code: z.ZodIssueCode.custom,
-          message: "Bullet connectors require matching nominal diameters",
+          message:
+            "Bullet connectors require matching nominal diameters and contact counts",
         })
       }
-      if (crossSection.kind !== "round_jacket") {
+      if (
+        "pinCount" in connectorA &&
+        ((connectorA.pinCount === 1 && crossSection.kind !== "round_jacket") ||
+          (connectorA.pinCount > 1 && crossSection.kind !== "wire_bundle"))
+      ) {
         ctx.addIssue({
           code: z.ZodIssueCode.custom,
-          message: "Bullet cables require one insulated wire",
+          message: "Bullet cables require one insulated wire per contact",
         })
       }
       for (const connector of [connectorA, connectorB]) {
         if (
           "diameter" in connector &&
-          (connector.bodyWidth <= connector.diameter ||
-            connector.bodyHeight !== connector.bodyWidth ||
+          (connector.bodyHeight <= connector.diameter ||
+            connector.pitch < connector.bodyHeight ||
+            Math.abs(
+              connector.bodyWidth -
+                (connector.bodyHeight +
+                  (connector.pinCount - 1) * connector.pitch),
+            ) > 1e-6 ||
+            (crossSection.kind === "wire_bundle" &&
+              (crossSection.wirePitch !== connector.pitch ||
+                crossSection.wires.some(
+                  (wire) => wire.diameter > connector.bodyHeight,
+                ))) ||
             connector.contactDepth >= connector.bodyDepth ||
             (crossSection.kind === "round_jacket" &&
-              crossSection.diameter > connector.bodyWidth))
+              crossSection.diameter > connector.bodyHeight))
         ) {
           ctx.addIssue({
             code: z.ZodIssueCode.custom,

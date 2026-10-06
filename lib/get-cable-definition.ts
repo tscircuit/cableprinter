@@ -19,16 +19,28 @@ export function getCableDefinition(cableInput: CableInput): CableDefinition {
       connectorA: getBulletConnector({
         diameter: cable.diameter,
         gender: cable.genderA,
+        pinCount: cable.pinCount,
       }),
       connectorB: getBulletConnector({
         diameter: cable.diameter,
         gender: cable.genderB,
+        pinCount: cable.pinCount,
       }),
-      crossSection: {
-        kind: "round_jacket",
-        diameter: cable.wireDiameter,
-        color: cable.color,
-      },
+      crossSection:
+        cable.pinCount === 1
+          ? {
+              kind: "round_jacket",
+              diameter: cable.wireDiameter,
+              color: cable.color,
+            }
+          : {
+              kind: "wire_bundle",
+              wirePitch: cable.diameter + 2,
+              wires: Array.from({ length: cable.pinCount }, (_, index) => ({
+                diameter: cable.wireDiameter,
+                color: wireColors[index % wireColors.length],
+              })),
+            },
     })
   }
   if (cable.standard === "usb_c") {

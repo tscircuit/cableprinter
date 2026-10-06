@@ -150,3 +150,9 @@ solder bullets with gold contacts, male spring slots, female socket recesses,
 and solder cups. Nominal contact diameter differs from socket outer diameter.
 They are visualization models, not manufacturer-specific fabrication drawings.
 The gallery pairs code with actual meshes for every supported diameter.
+
+Grouped bullets use `bullet3_3.5mm` (three male/female contact pairs) or
+`bullet3_3.5mm_female_male`. The object form adds `pinCount: 3`; counts 1–16
+are supported and default to 1. Each contact has its own insulated wire,
+spaced at nominal diameter + 2 mm, with distinct display colors. The contact
+count and diameter must match at both ends. Single-contact DSLs remain valid.

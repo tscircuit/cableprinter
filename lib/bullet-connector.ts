@@ -21,9 +21,11 @@ export type BulletGender = z.infer<typeof bulletGenderSchema>
 export function getBulletConnector({
   diameter,
   gender,
+  pinCount = 1,
 }: {
   diameter: BulletDiameter
   gender: BulletGender
+  pinCount?: number
 }) {
   const contactDepth = diameter * 2
   const bodyDiameter = diameter + (gender === "female" ? 1 : 0.6)
@@ -32,7 +34,9 @@ export function getBulletConnector({
       gender === "male" ? ("bullet_male" as const) : ("bullet_female" as const),
     diameter,
     contactDepth,
-    bodyWidth: bodyDiameter,
+    pinCount,
+    pitch: diameter + 2,
+    bodyWidth: bodyDiameter + (pinCount - 1) * (diameter + 2),
     bodyHeight: bodyDiameter,
     bodyDepth: contactDepth + diameter * 1.5,
   }

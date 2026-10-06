@@ -21,7 +21,7 @@ export default function Playground() {
     () =>
       getCableDefinition(
         standard === "bullet"
-          ? { standard, diameter, genderA, genderB }
+          ? { standard, diameter, genderA, genderB, pinCount }
           : isJst
             ? { standard, pinCount }
             : { standard },
@@ -52,12 +52,12 @@ export default function Playground() {
           ))}
         </select>
       </label>{" "}
-      {isJst && (
+      {(isJst || standard === "bullet") && (
         <label>
           Contacts{" "}
           <input
             type="range"
-            min={2}
+            min={standard === "bullet" ? 1 : 2}
             max={15}
             value={pinCount}
             onChange={(event) => setPinCount(Number(event.target.value))}

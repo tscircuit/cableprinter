@@ -22,6 +22,7 @@ export const cableInputSchema = z.discriminatedUnion("standard", [
     .object({
       standard: z.literal("bullet"),
       diameter: bulletDiameterSchema,
+      pinCount: z.number().int().min(1).max(16).default(1),
       genderA: bulletGenderSchema.default("male"),
       genderB: bulletGenderSchema.default("female"),
       wireDiameter: z.number().finite().positive().default(2),
