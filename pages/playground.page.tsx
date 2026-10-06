@@ -43,9 +43,16 @@ export default function Playground() {
         Standard{" "}
         <select
           value={standard}
-          onChange={(event) =>
-            setStandard(cableStandardSchema.parse(event.target.value))
-          }
+          onChange={(event) => {
+            const next = cableStandardSchema.parse(event.target.value)
+            setStandard(next)
+            setPinCount((count) =>
+              Math.max(
+                next === "bullet" ? 1 : 2,
+                Math.min(next === "jst_sh" ? 15 : 16, count),
+              ),
+            )
+          }}
         >
           {cableStandardSchema.options.map((standard) => (
             <option key={standard}>{standard}</option>
@@ -58,7 +65,7 @@ export default function Playground() {
           <input
             type="range"
             min={standard === "bullet" ? 1 : 2}
-            max={15}
+            max={standard === "jst_sh" ? 15 : 16}
             value={pinCount}
             onChange={(event) => setPinCount(Number(event.target.value))}
           />{" "}
