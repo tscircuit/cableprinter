@@ -40,7 +40,7 @@
     "@types/react": "^19.0.0",
     "@types/react-dom": "^19.0.0",
     "gl-matrix": "^3.4.4",
-    "jscad-electronics": "https://pkg.pr.new/tscircuit/jscad-electronics@2cfc900",
+    "jscad-electronics": "^0.0.210",
     "looks-same": "^10.0.1",
     "poppygl": "0.0.30",
     "react": "^19.1.1",
