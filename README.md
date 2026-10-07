@@ -158,7 +158,7 @@ Grouped bullets use `bullet3_d3.5mm` (three male/female contact pairs) or
 `bullet3_d3.5mm_afemale_bmale`. The object form adds `pinCount: 3`; counts 1–16
 are supported and default to 1. Each contact has its own insulated wire,
 spaced at nominal diameter + 2 mm, with distinct display colors. The contact
-count and diameter must match at both ends.
+Contact counts must match at both ends.
 
 All modifiers are named and can appear in any order: `d` specifies the nominal
 diameter, `a` specifies end A's gender, and `b` specifies end B's gender.
@@ -166,3 +166,49 @@ For example, `bullet3_bmale_d3.5mm_afemale` is equivalent to
 `bullet3_d3.5mm_afemale_bmale`. Each end's gender is optional and defaults
 independently. Positional modifiers, unknown names, and duplicate parameters
 are rejected.
+
+### Independent-ended adapter cables
+
+The generic wrapper names two independently specified connectors:
+
+```text
+adaptercable_a(bullet3_d3.5mm_gfemale)_b(bullet3_d4mm_gfemale)
+adaptercable_a(bullet3_d3.5mm_gfemale)_b(jst_ph_pins3)
+adaptercable_a(jst_sh_pins4)_b(jst_ph_pins4)
+```
+
+The first example mates with a motor's three 3.5 mm male outputs and a board's
+4 mm male plugs. Use `gmale` at B for female board sockets. `g` names a single
+connector's gender; `d` names its diameter. Both modifiers are required for
+bullet connector strings. A and B may appear in either order; duplicates,
+missing ends, positional parameters, nested cables, and trailing tokens fail.
+There are no `da`/`db` parameters or `diameterA`/`diameterB` object properties.
+
+Each end is parsed by `parseConnectorString`. Supported connector strings are
+`bullet[CONTACTS]_dNmm_gmale|gfemale`, `jst_sh[_pinsN]`, `jst_ph[_pinsN]`,
+`usb_c`, `nema_5_15p`, and `iec_c13`. `us_mains` is a two-ended cable preset,
+not a connector name. Explicit contact counts must match. The string describes
+physical mating interfaces, not electrical pin mapping or ratings.
+
+```ts
+getCableDefinition({
+  standard: "adaptercable",
+  connectorA: parseConnectorString("bullet3_d3.5mm_gfemale"),
+  connectorB: parseConnectorString("bullet3_d4mm_gfemale"),
+})
+```
+
+`getAdapterCableDefinition({ connectorA, connectorB, crossSection? })` exposes
+the same composition API. An optional cross section configures wire sizes and
+colors. Defaults use separate wires for two explicitly counted multi-contact
+ends, or a round jacket otherwise. Each end retains its native contact pitch;
+for different pitches, the renderer keeps a compact middle bundle and fans out
+within the last 20 mm at either end. Short routes use shorter transitions,
+preserving a compact middle third. The supplied route and connector poses stay intact.
+Existing cable preset strings and their snapshots remain unchanged.
+
+`stringifyConnector` and `stringifyCableDefinition` emit canonical stock strings;
+custom dimensions and cross sections stay in the object API. The optional
+`useShorthand` serializer flag emits existing cable presets when applicable.
+
+![Generic adapters with independent bullet and JST connectors](tests/__snapshots__/bullet-adapter-cables.snap.png)

@@ -1,14 +1,21 @@
 import { z } from "zod"
 import { bulletDiameterSchema, bulletGenderSchema } from "./bullet-connector"
+import {
+  cableConnectorSchema,
+  cableCrossSectionSchema,
+} from "./cable-definition"
+export { cableStandardSchema } from "./cable-standard"
+export type { CableStandard } from "./cable-standard"
 
-export const cableStandardSchema = z.enum([
-  "usb_c",
-  "jst_sh",
-  "jst_ph",
-  "us_mains",
-  "bullet",
-])
-export type CableStandard = z.infer<typeof cableStandardSchema>
+export const adapterCableInputSchema = z
+  .object({
+    standard: z.literal("adaptercable"),
+    connectorA: cableConnectorSchema,
+    connectorB: cableConnectorSchema,
+    crossSection: cableCrossSectionSchema.optional(),
+  })
+  .strict()
+export type AdapterCableInput = z.input<typeof adapterCableInputSchema>
 
 const color = z.string().regex(/^#[0-9a-fA-F]{6}$/)
 const jacket = {
@@ -51,6 +58,7 @@ export const cableInputSchema = z.discriminatedUnion("standard", [
       jacketDiameter: jacket.jacketDiameter.default(6.2),
     })
     .strict(),
+  adapterCableInputSchema,
 ])
 
 export type CableInput = z.input<typeof cableInputSchema>

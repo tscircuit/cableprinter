@@ -22,10 +22,12 @@ export function getBulletConnector({
   diameter,
   gender,
   pinCount = 1,
+  pitch = diameter + 2,
 }: {
   diameter: BulletDiameter
   gender: BulletGender
   pinCount?: number
+  pitch?: number
 }) {
   const contactDepth = diameter * 2
   const bodyDiameter = diameter + (gender === "female" ? 1 : 0.6)
@@ -35,8 +37,8 @@ export function getBulletConnector({
     diameter,
     contactDepth,
     pinCount,
-    pitch: diameter + 2,
-    bodyWidth: bodyDiameter + (pinCount - 1) * (diameter + 2),
+    pitch,
+    bodyWidth: bodyDiameter + (pinCount - 1) * pitch,
     bodyHeight: bodyDiameter,
     bodyDepth: contactDepth + diameter * 1.5,
   }

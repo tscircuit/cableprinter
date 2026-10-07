@@ -87,14 +87,7 @@ test("positional, duplicate, unknown and invalid parameters fail", () => {
     ).toBe(false)
   }
   const definition = getCableDefinition({ standard: "bullet", diameter: 4 })
-  const other = getCableDefinition({ standard: "bullet", diameter: 3.5 })
   const usb = getCableDefinition({ standard: "usb_c" })
-  expect(
-    cableDefinitionSchema.safeParse({
-      ...definition,
-      connectorB: other.connectorB,
-    }).success,
-  ).toBe(false)
   expect(
     cableDefinitionSchema.safeParse({
       ...definition,
