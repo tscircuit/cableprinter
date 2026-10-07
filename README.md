@@ -202,7 +202,9 @@ getCableDefinition({
 the same composition API. An optional cross section configures wire sizes and
 colors. Defaults use separate wires for two explicitly counted multi-contact
 ends, or a round jacket otherwise. Each end retains its native contact pitch;
-the renderer fans the wires between those pitches along the supplied route.
+for different pitches, the renderer keeps a compact middle bundle and fans out
+within the last 20 mm at either end. Short routes use shorter transitions,
+preserving a compact middle third. The supplied route and connector poses stay intact.
 Existing cable preset strings and their snapshots remain unchanged.
 
 `stringifyConnector` and `stringifyCableDefinition` emit canonical stock strings;
