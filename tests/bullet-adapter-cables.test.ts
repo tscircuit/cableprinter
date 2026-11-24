@@ -95,6 +95,14 @@ test("mixed connector families compose through the same generic API", () => {
   expect(parseCableString(shorthand).connectorA).toEqual(same.connectorA)
 })
 
+test("one explicitly counted multi-contact end can use a round jacket", () => {
+  const definition = parseCableString(
+    "adaptercable_a(bullet3_d3.5mm_gfemale)_b(usb_c)",
+  )
+  expect(definition.crossSection.kind).toBe("round_jacket")
+  expect(cableDefinitionSchema.parse(definition)).toEqual(definition)
+})
+
 test("ambiguous ends, old diameter modifiers, malformed composition and incompatible counts fail", () => {
   for (const text of [
     "bullet3_da3.5mm_db4mm_afemale_bfemale",

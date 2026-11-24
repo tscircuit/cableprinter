@@ -195,13 +195,13 @@ export const cableDefinitionSchema = z
             ) > 1e-6 ||
             connector.contactDepth >= connector.bodyDepth ||
             (connector.pinCount === 1 &&
-              (crossSection.kind !== "round_jacket" ||
-                crossSection.diameter > connector.bodyHeight)) ||
-            (connector.pinCount > 1 &&
-              (crossSection.kind !== "wire_bundle" ||
-                crossSection.wires.some(
-                  (wire) => wire.diameter > connector.bodyHeight,
-                ))))
+              crossSection.kind !== "round_jacket") ||
+            (crossSection.kind === "round_jacket" &&
+              crossSection.diameter > connector.bodyHeight) ||
+            (crossSection.kind === "wire_bundle" &&
+              crossSection.wires.some(
+                (wire) => wire.diameter > connector.bodyHeight,
+              )))
         )
           ctx.addIssue({
             code: z.ZodIssueCode.custom,
